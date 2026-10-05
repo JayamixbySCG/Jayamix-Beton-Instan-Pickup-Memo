@@ -11,9 +11,9 @@
     }
     
     body { 
-      /* Latar belakang menggunakan gambar yang kamu minta */
+      /* Latar belakang menggunakan gambar baru */
       background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), 
-                  url('https://scgcbm.id/wp-content/uploads/2023/10/Beton-Instan-Jayamix-by-SCG.png');
+                  url('https://primakonstruksi.com/wp-content/uploads/2021/10/Harga-Beton-Jayamix-2.jpg');
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
@@ -37,23 +37,41 @@
       border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
-    .header-title {
-      text-align: center;
+    /* Container Header untuk meletakkan Logo & Teks berdampingan */
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
       margin-bottom: 25px;
     }
 
-    .header-title h2 { 
-      color: #1e293b; 
-      margin: 0 0 6px 0; 
-      font-size: 22px; 
-      font-weight: 700;
-      letter-spacing: -0.5px;
+    .header-logo {
+      width: 65px;
+      height: auto;
+      object-fit: contain;
     }
 
-    .header-title p {
+    .header-text {
+      text-align: left;
+    }
+
+    .header-text h2 { 
+      color: #1e293b; 
+      margin: 0 0 2px 0; 
+      font-size: 20px; 
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+
+    .header-text p {
       margin: 0;
-      color: #64748b;
-      font-size: 13px;
+      color: #2563eb; 
+      font-size: 15px; 
+      font-weight: 700; 
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     label { 
@@ -115,9 +133,12 @@
 <body>
 
   <div class="card">
-    <div class="header-title">
-      <h2>Jayamix by SCG</h2>
-      <p>Beton Instan Pickup Memo</p>
+    <div class="header-container">
+      <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/13/Jayamix_by_SCG_logo.png/330px-Jayamix_by_SCG_logo.png" alt="Jayamix Logo" class="header-logo">
+      <div class="header-text">
+        <h2>Jayamix by SCG</h2>
+        <p>Beton Instan Pickup Memo</p>
+      </div>
     </div>
 
     <form id="memoForm">
@@ -184,10 +205,8 @@
   </div>
 
   <script>
-    // UBAH DENGAN NOMOR WA TUJUAN (Gunakan kode negara 62)
     const NOMOR_WA_TUJUAN = "62895323040532"; 
 
-    // Fitur otomatis menghapus spasi pada Vehicle No saat diketik
     document.getElementById('vehicleNo').addEventListener('input', function(e) {
       this.value = this.value.replace(/\s+/g, '');
     });
@@ -205,7 +224,6 @@
       const fleet = document.getElementById('fleet').value;
       const vehicleNo = document.getElementById('vehicleNo').value;
 
-      // Format teks pesan WhatsApp
       const pesan = `*Jayamix by SCG Beton Instan Pickup Memo*\n` +
                     `----------------------------------\n` +
                     `*Customer Name:* ${customerName}\n` +
