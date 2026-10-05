@@ -3,65 +3,120 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Memo Pengambilan Barang</title>
+  <title>Memo Pengambilan Beton Instan</title>
   <style>
     * { box-sizing: border-box; font-family: Arial, sans-serif; }
     body { background-color: #f4f6f8; margin: 0; padding: 20px; display: flex; justify-content: center; }
-    .card { background: #ffffff; padding: 25px; border-radius: 12px; max-width: 450px; width: 100%; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    h2 { color: #2c3e50; margin-top: 0; text-align: center; }
-    label { font-weight: bold; font-size: 14px; color: #333; display: block; margin-top: 12px; }
-    input, textarea { width: 100%; padding: 10px; margin-top: 6px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
-    button { width: 100%; background-color: #25D366; color: white; border: none; padding: 12px; font-size: 16px; font-weight: bold; border-radius: 6px; margin-top: 20px; cursor: pointer; }
+    .card { background: #ffffff; padding: 25px; border-radius: 12px; max-width: 500px; width: 100%; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    h2 { color: #2c3e50; margin-top: 0; text-align: center; font-size: 20px; }
+    label { font-weight: bold; font-size: 13px; color: #333; display: block; margin-top: 14px; }
+    input, select { width: 100%; padding: 10px; margin-top: 6px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; background-color: #fff; }
+    button { width: 100%; background-color: #25D366; color: white; border: none; padding: 12px; font-size: 16px; font-weight: bold; border-radius: 6px; margin-top: 22px; cursor: pointer; }
     button:hover { background-color: #1eb854; }
   </style>
 </head>
 <body>
 
   <div class="card">
-    <h2>Memo Pengambilan Barang</h2>
+    <h2>Memo Pengambilan Beton Instan</h2>
     <form id="memoForm">
-      <label for="nama">Nama Customer / Pengambil:</label>
-      <input type="text" id="nama" placeholder="Contoh: Budi Santoso" required>
+      
+      <label for="customerName">Customer Name:</label>
+      <input type="text" id="customerName" placeholder="Contoh: PT. SCG Readymix Indonesia" required>
 
-      <label for="nota">Nomor Nota / Invoice:</label>
-      <input type="text" id="nota" placeholder="Contoh: INV-2026-001" required>
+      <label for="produk">Produk:</label>
+      <input type="text" id="produk" placeholder="Contoh: Normal Beton Instan K350 Split" required>
 
-      <label for="tanggal">Tanggal & Jam Pengambilan:</label>
-      <input type="datetime-local" id="tanggal" required>
+      <label for="qty">Qty (bags):</label>
+      <input type="number" id="qty" min="1" step="1" placeholder="Masukkan jumlah kelipatan 1" required>
 
-      <label for="barang">Daftar Barang yang Diambil:</label>
-      <textarea id="barang" rows="4" placeholder="Contoh: 2x Kemeja Putih, 1x Celana Hitam" required></textarea>
+      <label for="pickupPoint">Pickup Point:</label>
+      <select id="pickupPoint" required>
+        <option value="">-- Pilih Pickup Point --</option>
+        <option value="East Jakarta">East Jakarta</option>
+        <option value="Surabaya">Surabaya</option>
+      </select>
+
+      <label for="pickupDate">Pickup Date:</label>
+      <input type="date" id="pickupDate" required>
+
+      <label for="pickupHour">Pickup Hour:</label>
+      <input type="time" id="pickupHour" required>
+
+      <label for="driverName">Driver Name:</label>
+      <input type="text" id="driverName" placeholder="Contoh: Budi Santoso" required>
+
+      <label for="fleet">Fleet:</label>
+      <select id="fleet" required>
+        <option value="">-- Pilih Jenis Armada --</option>
+        <option value="MPV">MPV</option>
+        <option value="Van">Van</option>
+        <option value="Pickup">Pickup</option>
+        <option value="Pickup box">Pickup box</option>
+        <option value="CDE box">CDE box</option>
+        <option value="CDE 3 ways">CDE 3 ways</option>
+        <option value="CDD box">CDD box</option>
+        <option value="CDD 3 ways">CDD 3 ways</option>
+        <option value="CDD flatbed">CDD flatbed</option>
+        <option value="Fuso box">Fuso box</option>
+        <option value="Fuso 3 ways">Fuso 3 ways</option>
+        <option value="Fuso flatbed">Fuso flatbed</option>
+        <option value="Tronton box">Tronton box</option>
+        <option value="Tronton 3 ways">Tronton 3 ways</option>
+        <option value="Tronton flatbed">Tronton flatbed</option>
+        <option value="Trailer 20ft container">Trailer 20ft container</option>
+        <option value="Trailer 20ft 3 ways">Trailer 20ft 3 ways</option>
+        <option value="Trailer 20ft flatbed">Trailer 20ft flatbed</option>
+        <option value="Trailer 40ft container">Trailer 40ft container</option>
+        <option value="Trailer 40ft 3 ways">Trailer 40ft 3 ways</option>
+        <option value="Trailer 40ft flatbed">Trailer 40ft flatbed</option>
+      </select>
+
+      <label for="vehicleNo">Vehicle No.:</label>
+      <input type="text" id="vehicleNo" placeholder="Contoh: B9988YUI" required>
 
       <button type="submit">Kirim Memo via WhatsApp</button>
     </form>
   </div>
 
   <script>
-    // UBAH NOMOR INI DENGAN NOMOR WA KANTONG / TOKO KAMU (Gunakan kode negara 62, bukan 0)
-    const NOMOR_WA_TUJUAN = "62895323040532"; 
+    // UBAH DENGAN NOMOR WA TUJUAN (Gunakan kode negara 62)
+    const NOMOR_WA_TUJUAN = "6281234567890"; 
+
+    // Fitur otomatis menghapus spasi pada Vehicle No saat diketik
+    document.getElementById('vehicleNo').addEventListener('input', function(e) {
+      this.value = this.value.replace(/\s+/g, '');
+    });
 
     document.getElementById('memoForm').addEventListener('submit', function(event) {
       event.preventDefault();
 
-      const nama = document.getElementById('nama').value;
-      const nota = document.getElementById('nota').value;
-      const tanggal = document.getElementById('tanggal').value;
-      const barang = document.getElementById('barang').value;
+      const customerName = document.getElementById('customerName').value;
+      const produk = document.getElementById('produk').value;
+      const qty = document.getElementById('qty').value;
+      const pickupPoint = document.getElementById('pickupPoint').value;
+      const pickupDate = document.getElementById('pickupDate').value;
+      const pickupHour = document.getElementById('pickupHour').value;
+      const driverName = document.getElementById('driverName').value;
+      const fleet = document.getElementById('fleet').value;
+      const vehicleNo = document.getElementById('vehicleNo').value;
 
       // Format teks pesan WhatsApp
-      const pesan = `*MEMO PENGAMBILAN BARANG*\n` +
+      const pesan = `*MEMO PENGAMBILAN BETON INSTAN*\n` +
                     `----------------------------------\n` +
-                    `*Nama Customer:* ${nama}\n` +
-                    `*No. Nota:* ${nota}\n` +
-                    `*Waktu Ambil:* ${tanggal}\n\n` +
-                    `*Daftar Barang:*\n${barang}\n` +
+                    `*Customer Name:* ${customerName}\n` +
+                    `*Produk:* ${produk}\n` +
+                    `*Qty:* ${qty} bags\n` +
+                    `*Pickup Point:* ${pickupPoint}\n` +
+                    `*Pickup Date:* ${pickupDate}\n` +
+                    `*Pickup Hour:* ${pickupHour}\n` +
+                    `*Driver Name:* ${driverName}\n` +
+                    `*Fleet:* ${fleet}\n` +
+                    `*Vehicle No.:* ${vehicleNo}\n` +
                     `----------------------------------\n` +
-                    `Mohon disiapkan barangnya. Terima kasih!`;
+                    `Mohon diproses untuk pengambilannya. Terima kasih!`;
 
-      // Buat link WA otomatis
       const urlWA = `https://wa.me/${NOMOR_WA_TUJUAN}?text=${encodeURIComponent(pesan)}`;
-
-      // Buka aplikasi WhatsApp
       window.open(urlWA, '_blank');
     });
   </script>
