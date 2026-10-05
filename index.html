@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memo Pengambilan Barang</title>
+  <style>
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { background-color: #f4f6f8; margin: 0; padding: 20px; display: flex; justify-content: center; }
+    .card { background: #ffffff; padding: 25px; border-radius: 12px; max-width: 450px; width: 100%; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    h2 { color: #2c3e50; margin-top: 0; text-align: center; }
+    label { font-weight: bold; font-size: 14px; color: #333; display: block; margin-top: 12px; }
+    input, textarea { width: 100%; padding: 10px; margin-top: 6px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+    button { width: 100%; background-color: #25D366; color: white; border: none; padding: 12px; font-size: 16px; font-weight: bold; border-radius: 6px; margin-top: 20px; cursor: pointer; }
+    button:hover { background-color: #1eb854; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Memo Pengambilan Barang</h2>
+    <form id="memoForm">
+      <label for="nama">Nama Customer / Pengambil:</label>
+      <input type="text" id="nama" placeholder="Contoh: Budi Santoso" required>
+
+      <label for="nota">Nomor Nota / Invoice:</label>
+      <input type="text" id="nota" placeholder="Contoh: INV-2026-001" required>
+
+      <label for="tanggal">Tanggal & Jam Pengambilan:</label>
+      <input type="datetime-local" id="tanggal" required>
+
+      <label for="barang">Daftar Barang yang Diambil:</label>
+      <textarea id="barang" rows="4" placeholder="Contoh: 2x Kemeja Putih, 1x Celana Hitam" required></textarea>
+
+      <button type="submit">Kirim Memo via WhatsApp</button>
+    </form>
+  </div>
+
+  <script>
+    // UBAH NOMOR INI DENGAN NOMOR WA KANTONG / TOKO KAMU (Gunakan kode negara 62, bukan 0)
+    const NOMOR_WA_TUJUAN = "62895323040532"; 
+
+    document.getElementById('memoForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const nama = document.getElementById('nama').value;
+      const nota = document.getElementById('nota').value;
+      const tanggal = document.getElementById('tanggal').value;
+      const barang = document.getElementById('barang').value;
+
+      // Format teks pesan WhatsApp
+      const pesan = `*MEMO PENGAMBILAN BARANG*\n` +
+                    `----------------------------------\n` +
+                    `*Nama Customer:* ${nama}\n` +
+                    `*No. Nota:* ${nota}\n` +
+                    `*Waktu Ambil:* ${tanggal}\n\n` +
+                    `*Daftar Barang:*\n${barang}\n` +
+                    `----------------------------------\n` +
+                    `Mohon disiapkan barangnya. Terima kasih!`;
+
+      // Buat link WA otomatis
+      const urlWA = `https://wa.me/${NOMOR_WA_TUJUAN}?text=${encodeURIComponent(pesan)}`;
+
+      // Buka aplikasi WhatsApp
+      window.open(urlWA, '_blank');
+    });
+  </script>
+
+</body>
+</html>
