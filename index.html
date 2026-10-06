@@ -84,7 +84,7 @@
       font-weight: bold;
     }
 
-    input, select, textarea { 
+    input, select { 
       width: 100%; 
       padding: 12px 14px; 
       margin-top: 6px; 
@@ -96,19 +96,12 @@
       transition: all 0.2s ease-in-out;
     }
 
-    textarea {
-      resize: vertical;
-      min-height: 80px;
-      font-family: inherit;
-    }
-
-    input:focus, select:focus, textarea:focus {
+    input:focus, select:focus {
       outline: none;
       border-color: #2563eb;
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
     }
 
-    /* Container khusus untuk input nomor telepon ber-prefix +62 */
     .phone-input-container {
       display: flex;
       align-items: center;
@@ -121,65 +114,3 @@
       border: 1.5px solid #cbd5e1;
       border-right: none;
       border-top-left-radius: 8px;
-      border-bottom-left-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #475569;
-    }
-
-    .phone-input-container input {
-      margin-top: 0;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-
-    button { 
-      width: 100%; 
-      background: linear-gradient(135deg, #25D366, #128C7E); 
-      color: white; 
-      border: none; 
-      padding: 14px; 
-      font-size: 15px; 
-      font-weight: 700; 
-      border-radius: 8px; 
-      margin-top: 28px; 
-      cursor: pointer; 
-      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
-      transition: all 0.2s ease;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-    }
-
-    button:hover { 
-      background: linear-gradient(135deg, #22bf5b, #0e7065); 
-      transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4);
-    }
-
-    button:active {
-      transform: translateY(0);
-    }
-  </style>
-</head>
-<body>
-
-  <div class="card">
-    <div class="header-container">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/1/13/Jayamix_by_SCG_logo.png" alt="Jayamix Logo" class="header-logo">
-      <div class="header-text">
-        <h2>Jayamix by SCG</h2>
-        <p>Beton Instan Pickup Memo</p>
-      </div>
-    </div>
-
-    <form id="memoForm" novalidate>
-      <label for="customerName">Customer Name <span class="required-star">*</span></label>
-      <input type="text" id="customerName" placeholder="Ex: PT. SCG Readymix Indonesia" required>
-
-      <label for="product">Product <span class="required-star">*</span></label>
-      <input type="text" id="product" placeholder="Ex: Normal Beton Instan K350 Split" required>
-
-      <label for="qty">Qty (bags) <span class="required-star">*</span></label>
-      <input type="number"
