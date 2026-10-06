@@ -102,6 +102,31 @@
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
     }
 
+    /* Container khusus untuk input nomor telepon ber-prefix +62 */
+    .phone-input-container {
+      display: flex;
+      align-items: center;
+      margin-top: 6px;
+    }
+
+    .phone-prefix {
+      padding: 12px 14px;
+      background-color: #f1f5f9;
+      border: 1.5px solid #cbd5e1;
+      border-right: none;
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #475569;
+    }
+
+    .phone-input-container input {
+      margin-top: 0;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
     button { 
       width: 100%; 
       background: linear-gradient(135deg, #25D366, #128C7E); 
@@ -170,6 +195,12 @@
       <label for="driverName">Driver Name <span class="required-star">*</span></label>
       <input type="text" id="driverName" placeholder="Ex: Prabowo Subianto" required>
 
+      <label for="driverContact">Driver Contact <span class="required-star">*</span></label>
+      <div class="phone-input-container">
+        <span class="phone-prefix">+62</span>
+        <input type="tel" id="driverContact" placeholder="81234567890" required>
+      </div>
+
       <label for="fleet">Fleet <span class="required-star">*</span></label>
       <select id="fleet" required>
         <option value="">-- Select Fleet Type --</option>
@@ -207,16 +238,28 @@
   </div>
 
   <script>
-    const NOMOR_WA_TUJUAN = "62895323040532"; 
+    const NOMOR_WA_TUJUAN = "6285723660272"; 
 
+    // Mencegah spasi pada Vehicle No.
     document.getElementById('vehicleNo').addEventListener('input', function(e) {
       this.value = this.value.replace(/\s+/g, '');
+    });
+
+    // Sanitasi input Driver Contact: HANYA ANGKA, tanpa spasi, otomatis hapus awalan 0 atau 62 jika diketik pengguna
+    document.getElementById('driverContact').addEventListener('input', function(e) {
+      let val = this.value.replace(/\D/g, ''); // Hapus semua karakter selain angka
+      if (val.startsWith('62')) {
+        val = val.substring(2);
+      } else if (val.startsWith('0')) {
+        val = val.substring(1);
+      }
+      this.value = val;
     });
 
     document.getElementById('memoForm').addEventListener('submit', function(event) {
       event.preventDefault();
 
-      // Ambil seluruh elemen input
+      // Daftar seluruh elemen input wajib
       const inputs = [
         { id: 'customerName', name: 'Customer Name' },
         { id: 'product', name: 'Product' },
@@ -225,6 +268,7 @@
         { id: 'pickupDate', name: 'Pickup Date' },
         { id: 'pickupHour', name: 'Pickup Hour' },
         { id: 'driverName', name: 'Driver Name' },
+        { id: 'driverContact', name: 'Driver Contact' },
         { id: 'fleet', name: 'Fleet' },
         { id: 'vehicleNo', name: 'Vehicle No.' }
       ];
@@ -235,11 +279,11 @@
         if (!field.value || field.value.trim() === "") {
           alert(`Please fill in the "${item.name}" field before submitting.`);
           field.focus();
-          return; // Hentikan proses jika ada field yang kosong
+          return;
         }
       }
 
-      // Jika semua sudah diisi, jalankan pengiriman ke WA
+      // Ambil seluruh nilai form
       const customerName = document.getElementById('customerName').value;
       const product = document.getElementById('product').value;
       const qty = document.getElementById('qty').value;
@@ -247,6 +291,7 @@
       const pickupDate = document.getElementById('pickupDate').value;
       const pickupHour = document.getElementById('pickupHour').value;
       const driverName = document.getElementById('driverName').value;
+      const driverContact = '+62' + document.getElementById('driverContact').value;
       const fleet = document.getElementById('fleet').value;
       const vehicleNo = document.getElementById('vehicleNo').value;
 
@@ -259,6 +304,7 @@
                     `*Pickup Date:* ${pickupDate}\n` +
                     `*Pickup Hour:* ${pickupHour}\n` +
                     `*Driver Name:* ${driverName}\n` +
+                    `*Driver Contact:* ${driverContact}\n` +
                     `*Fleet:* ${fleet}\n` +
                     `*Vehicle No.:* ${vehicleNo}\n` +
                     `----------------------------------\n` +
