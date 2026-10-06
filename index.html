@@ -1,34 +1,647 @@
 <!DOCTYPE html>
+
 <html lang="id">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jayamix by SCG Beton Instan Pickup Memo</title>
-  <style>
-    * { 
-      box-sizing: border-box; 
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-    }
-    
-    body { 
-      background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), 
-                  url('https://scgcbm.id/wp-content/uploads/2023/10/Beton-Instan-Jayamix-by-SCG.png');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-      margin: 0; 
-      padding: 30px 15px; 
-      min-height: 100vh;
-      display: flex; 
-      justify-content: center; 
-      align-items: center;
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Jayamix by SCG Beton Instan Pickup Memo</title>
+
+<style>
+
+* { 
+
+box-sizing: border-box; 
+
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+
+}
+
+
+
+body { 
+
+background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), 
+
+url('https://scgcbm.id/wp-content/uploads/2023/10/Beton-Instan-Jayamix-by-SCG.png');
+
+background-size: cover;
+
+background-position: center;
+
+background-attachment: fixed;
+
+background-repeat: no-repeat;
+
+margin: 0; 
+
+padding: 30px 15px; 
+
+min-height: 100vh;
+
+display: flex; 
+
+justify-content: center; 
+
+align-items: center;
+
+}
+
+
+
+.card { 
+
+background: rgba(255, 255, 255, 0.95); 
+
+backdrop-filter: blur(8px);
+
+padding: 35px 30px; 
+
+border-radius: 16px; 
+
+max-width: 520px; 
+
+width: 100%; 
+
+box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2); 
+
+border: 1px solid rgba(255, 255, 255, 0.3);
+
+}
+
+
+
+.header-container {
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+gap: 15px;
+
+margin-bottom: 25px;
+
+}
+
+
+
+.header-logo {
+
+width: 65px;
+
+height: auto;
+
+object-fit: contain;
+
+}
+
+
+
+.header-text {
+
+text-align: left;
+
+}
+
+
+
+.header-text h2 { 
+
+color: #1e293b; 
+
+margin: 0 0 2px 0; 
+
+font-size: 20px; 
+
+font-weight: 800;
+
+letter-spacing: -0.5px;
+
+line-height: 1.2;
+
+}
+
+
+
+.header-text p {
+
+margin: 0;
+
+color: #1e293b; 
+
+font-size: 16px; 
+
+font-weight: 700; 
+
+line-height: 1.2;
+
+}
+
+
+
+label { 
+
+font-weight: 600; 
+
+font-size: 13px; 
+
+color: #334155; 
+
+display: block; 
+
+margin-top: 16px; 
+
+}
+
+
+
+.required-star {
+
+color: #e11d48;
+
+font-weight: bold;
+
+}
+
+    input, select, textarea { 
+
+
+    input, select { 
+
+width: 100%; 
+
+padding: 12px 14px; 
+
+margin-top: 6px; 
+
+border: 1.5px solid #cbd5e1; 
+
+border-radius: 8px; 
+
+font-size: 14px; 
+
+background-color: #ffffff; 
+
+color: #1e293b;
+
+transition: all 0.2s ease-in-out;
     }
 
-    .card { 
-      background: rgba(255, 255, 255, 0.95); 
-      backdrop-filter: blur(8px);
-      padding: 35px 30px; 
-      border-radius: 16px; 
-      max-width: 520px; 
-      width: 10
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+      font-family: inherit;
+}
+
+    input:focus, select:focus, textarea:focus {
+
+
+    input:focus, select:focus {
+
+outline: none;
+
+border-color: #2563eb;
+
+box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+
+}
+
+
+
+    /* Container khusus untuk input nomor telepon ber-prefix +62 */
+
+.phone-input-container {
+
+display: flex;
+
+align-items: center;
+
+margin-top: 6px;
+
+}
+
+
+
+.phone-prefix {
+
+padding: 12px 14px;
+
+background-color: #f1f5f9;
+
+border: 1.5px solid #cbd5e1;
+
+border-right: none;
+
+border-top-left-radius: 8px;
+      border-bottom-left-radius
+
+      border-bottom-left-radius: 8px;
+
+      font-size: 14px;
+
+      font-weight: 600;
+
+      color: #475569;
+
+    }
+
+
+
+    .phone-input-container input {
+
+      margin-top: 0;
+
+      border-top-left-radius: 0;
+
+      border-bottom-left-radius: 0;
+
+    }
+
+
+
+    button { 
+
+      width: 100%; 
+
+      background: linear-gradient(135deg, #25D366, #128C7E); 
+
+      color: white; 
+
+      border: none; 
+
+      padding: 14px; 
+
+      font-size: 15px; 
+
+      font-weight: 700; 
+
+      border-radius: 8px; 
+
+      margin-top: 28px; 
+
+      cursor: pointer; 
+
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+
+      transition: all 0.2s ease;
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      gap: 8px;
+
+    }
+
+
+
+    button:hover { 
+
+      background: linear-gradient(135deg, #22bf5b, #0e7065); 
+
+      transform: translateY(-1px);
+
+      box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4);
+
+    }
+
+
+
+    button:active {
+
+      transform: translateY(0);
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+
+
+  <div class="card">
+
+    <div class="header-container">
+
+      <img src="https://upload.wikimedia.org/wikipedia/commons/1/13/Jayamix_by_SCG_logo.png" alt="Jayamix Logo" class="header-logo">
+
+      <div class="header-text">
+
+        <h2>Jayamix by SCG</h2>
+
+        <p>Beton Instan Pickup Memo</p>
+
+      </div>
+
+    </div>
+
+
+
+    <form id="memoForm" novalidate>
+
+      <label for="customerName">Customer Name <span class="required-star">*</span></label>
+
+      <input type="text" id="customerName" placeholder="Ex: PT. SCG Readymix Indonesia" required>
+
+
+
+      <label for="product">Product <span class="required-star">*</span></label>
+
+      <input type="text" id="product" placeholder="Ex: Normal Beton Instan K350 Split" required>
+
+
+
+      <label for="qty">Qty (bags) <span class="required-star">*</span></label>
+
+      <input type="number" id="qty" min="1" step="1" placeholder="Enter quantity in multiples of 1" required>
+
+
+
+      <label for="pickupPoint">Pickup Point <span class="required-star">*</span></label>
+
+      <select id="pickupPoint" required>
+
+        <option value="">-- Select Pickup Point --</option>
+
+        <option value="East Jakarta">East Jakarta</option>
+
+        <option value="Surabaya">Surabaya</option>
+
+        <option value="Karawang">Karawang</option>
+
+      </select>
+
+
+
+      <label for="pickupDate">Pickup Date <span class="required-star">*</span></label>
+
+      <input type="date" id="pickupDate" required>
+
+
+
+      <label for="pickupHour">Pickup Hour <span class="required-star">*</span></label>
+
+      <input type="time" id="pickupHour" required>
+
+
+
+      <label for="driverName">Driver Name <span class="required-star">*</span></label>
+
+      <input type="text" id="driverName" placeholder="Ex: Prabowo Subianto" required>
+
+
+
+      <label for="driverContact">Driver Contact <span class="required-star">*</span></label>
+
+      <div class="phone-input-container">
+
+        <span class="phone-prefix">+62</span>
+
+        <input type="tel" id="driverContact" placeholder="81234567890" required>
+
+      </div>
+
+
+
+      <label for="fleet">Fleet <span class="required-star">*</span></label>
+
+      <select id="fleet" required>
+
+        <option value="">-- Select Fleet Type --</option>
+
+        <option value="Motorcycle">Motorcycle</option>
+
+        <option value="MPV">MPV</option>
+
+        <option value="Van">Van</option>
+
+        <option value="Pickup">Pickup</option>
+
+        <option value="Pickup box">Pickup box</option>
+
+        <option value="CDE box">CDE box</option>
+
+        <option value="CDE 3 ways">CDE 3 ways</option>
+
+        <option value="CDD box">CDD box</option>
+
+        <option value="CDD 3 ways">CDD 3 ways</option>
+
+        <option value="CDD flatbed">CDD flatbed</option>
+
+        <option value="Fuso box">Fuso box</option>
+
+        <option value="Fuso 3 ways">Fuso 3 ways</option>
+
+        <option value="Fuso flatbed">Fuso flatbed</option>
+
+        <option value="Tronton wingbox">Tronton wingbox</option>
+
+        <option value="Tronton box">Tronton box</option>
+
+        <option value="Tronton 3 ways">Tronton 3 ways</option>
+
+        <option value="Tronton flatbed">Tronton flatbed</option>
+
+        <option value="Trailer 20ft container">Trailer 20ft container</option>
+
+        <option value="Trailer 20ft 3 ways">Trailer 20ft 3 ways</option>
+
+        <option value="Trailer 20ft flatbed">Trailer 20ft flatbed</option>
+
+        <option value="Trailer 40ft container">Trailer 40ft container</option>
+
+        <option value="Trailer 40ft 3 ways">Trailer 40ft 3 ways</option>
+
+        <option value="Trailer 40ft flatbed">Trailer 40ft flatbed</option>
+
+      </select>
+
+
+
+      <label for="vehicleNo">Vehicle No. <span class="required-star">*</span></label>
+
+      <input type="text" id="vehicleNo" placeholder="Ex: B9988YUI" required>
+
+
+
+      <button type="submit">
+
+        Send Memo via WhatsApp
+
+      </button>
+
+    </form>
+
+  </div>
+
+
+
+  <script>
+
+    const NOMOR_WA_TUJUAN = "6285723660272"; 
+
+
+
+    // Mencegah spasi pada Vehicle No.
+
+    document.getElementById('vehicleNo').addEventListener('input', function(e) {
+
+      this.value = this.value.replace(/\s+/g, '');
+
+    });
+
+
+
+    // Sanitasi input Driver Contact: HANYA ANGKA, tanpa spasi, otomatis hapus awalan 0 atau 62 jika diketik pengguna
+
+    document.getElementById('driverContact').addEventListener('input', function(e) {
+
+      let val = this.value.replace(/\D/g, ''); // Hapus semua karakter selain angka
+
+      if (val.startsWith('62')) {
+
+        val = val.substring(2);
+
+      } else if (val.startsWith('0')) {
+
+        val = val.substring(1);
+
+      }
+
+      this.value = val;
+
+    });
+
+
+
+    document.getElementById('memoForm').addEventListener('submit', function(event) {
+
+      event.preventDefault();
+
+
+
+      // Daftar seluruh elemen input wajib
+
+      const inputs = [
+
+        { id: 'customerName', name: 'Customer Name' },
+
+        { id: 'product', name: 'Product' },
+
+        { id: 'qty', name: 'Qty (bags)' },
+
+        { id: 'pickupPoint', name: 'Pickup Point' },
+
+        { id: 'pickupDate', name: 'Pickup Date' },
+
+        { id: 'pickupHour', name: 'Pickup Hour' },
+
+        { id: 'driverName', name: 'Driver Name' },
+
+        { id: 'driverContact', name: 'Driver Contact' },
+
+        { id: 'fleet', name: 'Fleet' },
+
+        { id: 'vehicleNo', name: 'Vehicle No.' }
+
+      ];
+
+
+
+      // Pengecekan mandatory
+
+      for (let item of inputs) {
+
+        const field = document.getElementById(item.id);
+
+        if (!field.value || field.value.trim() === "") {
+
+          alert(`Please fill in the "${item.name}" field before submitting.`);
+
+          field.focus();
+
+          return;
+
+        }
+
+      }
+
+
+
+      // Ambil seluruh nilai form
+
+      const customerName = document.getElementById('customerName').value;
+
+      const product = document.getElementById('product').value;
+
+      const qty = document.getElementById('qty').value;
+
+      const pickupPoint = document.getElementById('pickupPoint').value;
+
+      const pickupDate = document.getElementById('pickupDate').value;
+
+      const pickupHour = document.getElementById('pickupHour').value;
+
+      const driverName = document.getElementById('driverName').value;
+
+      const driverContact = '+62' + document.getElementById('driverContact').value;
+
+      const fleet = document.getElementById('fleet').value;
+
+      const vehicleNo = document.getElementById('vehicleNo').value;
+
+
+
+      const pesan = `*Jayamix by SCG Beton Instan Pickup Memo*\n` +
+
+                    `----------------------------------\n` +
+
+                    `*Customer Name:* ${customerName}\n` +
+
+                    `*Product:* ${product}\n` +
+
+                    `*Qty:* ${qty} bags\n` +
+
+                    `*Pickup Point:* ${pickupPoint}\n` +
+
+                    `*Pickup Date:* ${pickupDate}\n` +
+
+                    `*Pickup Hour:* ${pickupHour}\n` +
+
+                    `*Driver Name:* ${driverName}\n` +
+
+                    `*Driver Contact:* ${driverContact}\n` +
+
+                    `*Fleet:* ${fleet}\n` +
+
+                    `*Vehicle No.:* ${vehicleNo}\n` +
+
+                    `----------------------------------\n` +
+
+                    `Please process this need, thank you.`;
+
+
+
+      const urlWA = `https://wa.me/${NOMOR_WA_TUJUAN}?text=${encodeURIComponent(pesan)}`;
+
+      window.open(urlWA, '_blank');
+
+    });
+
+  </script>
+
+
+
+</body>
+
+</html>
