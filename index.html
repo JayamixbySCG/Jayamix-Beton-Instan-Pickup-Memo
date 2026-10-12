@@ -152,9 +152,39 @@
       box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4);
     }
 
-    button:active {
-      transform: translateY(0);
+    button:active { transform: translateY(0); }
+
+    .product-row {
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 12px;
+      background: #f8fafc;
     }
+
+    .product-row label { margin-top: 4px; }
+    .product-row input { margin-bottom: 8px; }
+
+    .add-product-button, .remove-product-button {
+      width: auto;
+      margin-top: 12px;
+      padding: 9px 12px;
+      font-size: 13px;
+      box-shadow: none;
+      display: inline-flex;
+    }
+
+    .add-product-button { background: #2563eb; }
+    .add-product-button:hover { background: #1d4ed8; box-shadow: none; }
+
+    .remove-product-button {
+      background: #e2e8f0;
+      color: #334155;
+      margin-top: 4px;
+    }
+    .remove-product-button:hover { background: #cbd5e1; box-shadow: none; }
+
+    .product-section-label { margin-top: 16px; }
   </style>
 </head>
 <body>
@@ -173,11 +203,16 @@
       <label for="customerName">Customer Name <span class="required-star">*</span></label>
       <input type="text" id="customerName" placeholder="Ex: PT. SCG Readymix Indonesia" required>
 
-      <label for="product">Product <span class="required-star">*</span></label>
-      <input type="text" id="product" placeholder="Ex: Normal Beton Instan K350 Split" required>
-
-      <label for="qty">Qty (bags) <span class="required-star">*</span></label>
-      <input type="number" id="qty" min="1" step="1" placeholder="Enter quantity in multiples of 1" required>
+      <label class="product-section-label">Products and Quantity <span class="required-star">*</span></label>
+      <div id="productsContainer">
+        <div class="product-row">
+          <label for="product-1">Product 1 <span class="required-star">*</span></label>
+          <input type="text" id="product-1" class="product-name" placeholder="Ex: Normal Beton Instan K350 Split" required>
+          <label for="qty-1">Qty (bags) <span class="required-star">*</span></label>
+          <input type="number" id="qty-1" class="product-qty" min="1" step="1" placeholder="Enter quantity in multiples of 1" required>
+        </div>
+      </div>
+      <button type="button" id="addProductButton" class="add-product-button">+ Add Product</button>
 
       <!-- NEW: Project Address -->
       <label for="projectAddress">Project Address <span class="required-star">*</span></label>
@@ -244,35 +279,68 @@
   </div>
 
   <script>
-    const NOMOR_WA_TUJUAN = "6285723660272"; 
+    const NOMOR_WA_TUJUAN = "6285723660272";
+    const productsContainer = document.getElementById('productsContainer');
+    const addProductButton = document.getElementById('addProductButton');
+    let productCounter = 1;
+
+    // Tambah baris produk baru.
+    addProductButton.addEventListener('click', function() {
+      productCounter++;
+      const row = document.createElement('div');
+      row.className = 'product-row';
+      row.innerHTML = `
+        <label for="product-${productCounter}">Product ${productCounter} <span class="required-star">*</span></label>
+        <input type="text" id="product-${productCounter}" class="product-name" placeholder="Enter product name" required>
+        <label for="qty-${productCounter}">Qty (bags) <span class="required-star">*</span></label>
+        <input type="number" id="qty-${productCounter}" class="product-qty" min="1" step="1" placeholder="Enter quantity in multiples of 1" required>
+        <button type="button" class="remove-product-button">Remove Product</button>
+      `;
+      productsContainer.appendChild(row);
+      row.querySelector('.remove-product-button').addEventListener('click', function() {
+        row.remove();
+        updateProductLabels();
+      });
+      row.querySelector('.product-name').focus();
+    });
+
+    function updateProductLabels() {
+      const rows = productsContainer.querySelectorAll('.product-row');
+      rows.forEach((row, index) => {
+        const number = index + 1;
+        const nameInput = row.querySelector('.product-name');
+        const qtyInput = row.querySelector('.product-qty');
+        row.querySelector('label[for^="product-"]').innerHTML = `Product ${number} <span class="required-star">*</span>`;
+        row.querySelector('label[for^="qty-"]').innerHTML = `Qty (bags) <span class="required-star">*</span>`;
+        nameInput.id = `product-${number}`;
+        qtyInput.id = `qty-${number}`;
+        row.querySelectorAll('label')[0].htmlFor = nameInput.id;
+        row.querySelectorAll('label')[1].htmlFor = qtyInput.id;
+      });
+      productCounter = rows.length;
+    }
 
     // Mencegah spasi pada Vehicle No.
-    document.getElementById('vehicleNo').addEventListener('input', function(e) {
+    document.getElementById('vehicleNo').addEventListener('input', function() {
       this.value = this.value.replace(/\s+/g, '');
     });
 
-    // Sanitasi input Driver Contact:
-    // HANYA ANGKA, tanpa spasi, otomatis hapus awalan 0 atau 62 jika diketik pengguna
-    document.getElementById('driverContact').addEventListener('input', function(e) {
+    // Hanya angka; hapus awalan 0 atau 62 dari nomor yang dimasukkan.
+    document.getElementById('driverContact').addEventListener('input', function() {
       let val = this.value.replace(/\D/g, '');
-
       if (val.startsWith('62')) {
         val = val.substring(2);
       } else if (val.startsWith('0')) {
         val = val.substring(1);
       }
-
       this.value = val;
     });
 
     document.getElementById('memoForm').addEventListener('submit', function(event) {
       event.preventDefault();
 
-      // Daftar seluruh elemen input wajib
       const inputs = [
         { id: 'customerName', name: 'Customer Name' },
-        { id: 'product', name: 'Product' },
-        { id: 'qty', name: 'Qty (bags)' },
         { id: 'projectAddress', name: 'Project Address' },
         { id: 'pickupPoint', name: 'Pickup Point' },
         { id: 'pickupDate', name: 'Pickup Date' },
@@ -283,35 +351,54 @@
         { id: 'vehicleNo', name: 'Vehicle No.' }
       ];
 
-      // Pengecekan mandatory
-      for (let item of inputs) {
+      for (const item of inputs) {
         const field = document.getElementById(item.id);
-
-        if (!field.value || field.value.trim() === "") {
+        if (!field.value || field.value.trim() === '') {
           alert(`Please fill in the "${item.name}" field before submitting.`);
           field.focus();
           return;
         }
       }
 
-      // Ambil seluruh nilai form
-      const customerName = document.getElementById('customerName').value;
-      const product = document.getElementById('product').value;
-      const qty = document.getElementById('qty').value;
-      const projectAddress = document.getElementById('projectAddress').value;
+      // Validasi semua baris produk dan qty.
+      const productRows = Array.from(productsContainer.querySelectorAll('.product-row'));
+      const products = [];
+      for (let i = 0; i < productRows.length; i++) {
+        const product = productRows[i].querySelector('.product-name').value.trim();
+        const qtyField = productRows[i].querySelector('.product-qty');
+        const qty = Number(qtyField.value);
+
+        if (!product) {
+          alert(`Please fill in the product name for Product ${i + 1}.`);
+          productRows[i].querySelector('.product-name').focus();
+          return;
+        }
+        if (!qtyField.value || !Number.isInteger(qty) || qty < 1) {
+          alert(`Please enter a whole number of at least 1 for the quantity of Product ${i + 1}.`);
+          qtyField.focus();
+          return;
+        }
+        products.push({ product, qty });
+      }
+
+      const customerName = document.getElementById('customerName').value.trim();
+      const projectAddress = document.getElementById('projectAddress').value.trim();
       const pickupPoint = document.getElementById('pickupPoint').value;
       const pickupDate = document.getElementById('pickupDate').value;
       const pickupHour = document.getElementById('pickupHour').value;
-      const driverName = document.getElementById('driverName').value;
+      const driverName = document.getElementById('driverName').value.trim();
       const driverContact = '+62' + document.getElementById('driverContact').value;
       const fleet = document.getElementById('fleet').value;
-      const vehicleNo = document.getElementById('vehicleNo').value;
+      const vehicleNo = document.getElementById('vehicleNo').value.trim();
+
+      const productText = products.map((item, index) =>
+        `${index + 1}. ${item.product} — ${item.qty} bags`
+      ).join('\n');
 
       const pesan = `*Jayamix by SCG Beton Instan Pickup Memo*\n` +
                     `----------------------------------\n` +
                     `*Customer Name:* ${customerName}\n` +
-                    `*Product:* ${product}\n` +
-                    `*Qty:* ${qty} bags\n` +
+                    `*Products & Qty:*\n${productText}\n` +
                     `*Project Address:* ${projectAddress}\n` +
                     `*Pickup Point:* ${pickupPoint}\n` +
                     `*Pickup Date:* ${pickupDate}\n` +
